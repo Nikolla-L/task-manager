@@ -1,5 +1,7 @@
 export default {
 	ACCESS_TOKEN_DURATION: '30m',
+	JWT_SECRET: 'some_secret_key',
+	
 	DATABASE: {
 		TYPE: process.env['DATABASE_TYPE'] || 'postgres',
 		HOST: process.env['DATABASE_HOST'] || 'ec2-52-73-184-24.compute-1.amazonaws.com',

@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 
-export abstract class Base{
+export abstract class Base {
 
     @PrimaryGeneratedColumn()
 	id: number;

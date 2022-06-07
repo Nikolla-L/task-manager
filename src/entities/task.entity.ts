@@ -20,7 +20,14 @@ export class Task extends Base {
 	})
 	dueDate: Date;
 
+	@Column({
+		default: 'progress'
+	})
+	status: string;
+
     @ManyToMany(() => User)
     @JoinTable()
     assignee: User[];
+
+	
 }
