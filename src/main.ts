@@ -9,6 +9,13 @@ async function bootstrap() {
   app.setGlobalPrefix('api', {
     exclude: [{ path: '', method: RequestMethod.GET }]
   });
+
+  const options = {
+    origin: "*",
+    methods: "GET,PUT,POST,DELETE",
+  };
+  app.enableCors(options);
+
   
   InitOpenApi(app);
 
