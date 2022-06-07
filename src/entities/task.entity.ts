@@ -12,7 +12,7 @@ export class Task extends Base {
 
 	@ApiProperty()
 	@Column()
-	description: Text;
+	description: string;
 
     @ApiProperty()
 	@Column({

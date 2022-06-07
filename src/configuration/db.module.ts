@@ -16,9 +16,9 @@ import prop from './property';
 			database: prop.DATABASE.NAME,
 			entities: ['dist/**/entities/*{.js,.ts}'],
 			synchronize: true,
-			// namingStrategy: new SnakeNamingStrategy(),
-			// autoLoadEntities: true,
-			// logging: 'all'
+			ssl: {
+			  rejectUnauthorized: false
+			},
 		}),
 	]
 })

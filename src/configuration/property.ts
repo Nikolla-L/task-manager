@@ -1,14 +1,11 @@
 export default {
-	// API_KEY: process.env['API_KEY'] || '2f92e185de0504e4751d83946ea2f01d',
 	ACCESS_TOKEN_DURATION: '30m',
-	// REFRESH_TOKEN_DURATION: '4H',
-
 	DATABASE: {
 		TYPE: process.env['DATABASE_TYPE'] || 'postgres',
-		HOST: process.env['DATABASE_HOST'] || 'localhost',
+		HOST: process.env['DATABASE_HOST'] || 'ec2-52-73-184-24.compute-1.amazonaws.com',
 		PORT: parseInt(process.env['DATABASE_PORT'] || '5432'),
-		USERNAME: process.env['DATABASE_USERNAME'] || 'postgres',
-		PASSWORD: process.env['DATABASE_PASSWORD'] || 'root',
-		NAME: process.env['DATABASE_NAME'] || 'citycom_task'
+		USERNAME: process.env['DATABASE_USERNAME'] || 'ljygjbkzwxillx',
+		PASSWORD: process.env['DATABASE_PASSWORD'] || 'cd62a01f30a844a34aad70664bfe0db97fc91b8b8900f72737c030371c8cd33e',
+		NAME: process.env['DATABASE_NAME'] || 'd56qodf950mvpn'
 	},
 }
