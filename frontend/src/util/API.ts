@@ -7,7 +7,7 @@ axios.defaults.paramsSerializer = params => {
 
 export const API = axios.create({
     // baseURL: 'http://localhost:3001/api',
-    baseURL: 'https://task-manager-citycom.netlify.app',
+    baseURL: 'https://task-manager-citycom.herokuapp.com/api',
     timeout: 15000
 })
 
