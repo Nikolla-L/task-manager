@@ -68,7 +68,7 @@ export const Auth = () => {
                     requestFailed('მომხმარებლის სახელი ან პაროლი არასწორია!');
                     setSpinning(false);
                 } else {
-                    context.setUser(res.data.user);
+                    context.setUser({...res.data.user, token: res.data.access_token});
 
                     let path = window.location.pathname;
                     path = path.slice(1);
@@ -126,7 +126,7 @@ export const Auth = () => {
     const validateMessages = {
         required: '${label} აუცილებელია',
         types: {
-            email: '${label} არასწორია!'
+            email: '${label}ს ფორმატი არასწორია!'
         }
     }
     
@@ -151,7 +151,7 @@ export const Auth = () => {
             <Input value={code} onChange={e => setCode(e.target.value)}/>
         </Modal>
 
-        <Row justify="space-around" align="middle" style={{minHeight: '100vh', minWidth: '100vh'}}>
+        <Row justify="space-around" align="middle" className='auth-wrapper'>
             <Col>
                 <Spin spinning={spinning} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
                     {

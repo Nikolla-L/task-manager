@@ -6,9 +6,16 @@ axios.defaults.paramsSerializer = params => {
 }
 
 export const API = axios.create({
-    baseURL: 'https://task-manager-citycom.herokuapp.com/api',
+    baseURL: 'http://localhost:3001/api',
     timeout: 15000
 })
+
+API.interceptors.request.use((req: any) => {
+    if (localStorage.getItem('user')) {
+        req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('user') || '{}')?.token}`
+    }
+    return req;
+});
 
 API.interceptors.response.use(
     response => response,

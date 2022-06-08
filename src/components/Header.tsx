@@ -18,7 +18,7 @@ export const MainHeader = ({user, setPageLoading}: any) => {
     const menu = (
         <Menu onClick={logout}>
             <Menu.Item key="1" icon={<LogoutOutlined />}>
-                Log Out
+                გასვლა
             </Menu.Item>
         </Menu>
     );
@@ -27,12 +27,14 @@ export const MainHeader = ({user, setPageLoading}: any) => {
         <Header>
             <Row justify="space-between">
                 <Col>
-                    <div className="logo">Logo</div>
+                    <div className="logo">
+                        <h2>Task Manager</h2>
+                    </div>
                 </Col>
                 <Col>
                     <Dropdown overlay={menu}>
                         <Button type="primary" size="large">
-                            <UserOutlined/> {JSON.parse(user)?.username} <DownOutlined/>
+                            <UserOutlined/> {JSON.parse(user)?.fullName} <DownOutlined/>
                         </Button>
                     </Dropdown>
                 </Col>

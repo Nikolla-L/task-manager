@@ -1,55 +1,21 @@
 import React from "react";
 import {Menu} from "antd";
 import {Link} from "react-router-dom";
-import {
-    CarOutlined,
-    DatabaseOutlined,
-    PieChartOutlined,
-    SettingOutlined,
-    SoundOutlined,
-    TeamOutlined,
-    ToolOutlined,
-    KeyOutlined,
-    DoubleLeftOutlined
-} from "@ant-design/icons";
+import {ContactsOutlined, DatabaseOutlined, BlockOutlined, DoubleLeftOutlined} from "@ant-design/icons";
 import Sider from "antd/es/layout/Sider";
 
-const menuItems = [{
-    path: '/users',
-    title: 'მომხმარებლები',
-    icon: <TeamOutlined/>
-}, {
-    path: '/administration',
-    title: 'მართვა',
-    icon: <SettingOutlined/>
-}, /*{
-	path: '/prices',
-	title: 'ტარიფები',
-	icon: <ControlOutlined/>
-}, */{
-    path: '/waiting-events',
-    title: 'მიმდინარე',
-    icon: <SoundOutlined/>
-}, {
+const menuItems = [ {
     path: '/',
     title: 'სრული სია',
     icon: <DatabaseOutlined/>
 }, {
-    path: '/cars',
-    title: 'მანქანების სია',
-    icon: <CarOutlined/>
-},{
-    path: '/accesses',
-    title: 'წვდომა',
-    icon: <KeyOutlined />
-},{
-    path: '/reports',
-    title: 'რეპორტები',
-    icon: <PieChartOutlined/>
+    path: '/my-created',
+    title: 'ჩემი შექმნილი',
+    icon: <BlockOutlined />
 }, {
-    path: '/test-page',
-    title: 'Test Page',
-    icon: <ToolOutlined/>
+    path: '/assigned-to-me',
+    title: 'ჩემზე მომაგრებული',
+    icon: <ContactsOutlined />
 }];
 
 export const Navigation = () => (
