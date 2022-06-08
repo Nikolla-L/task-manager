@@ -14,9 +14,10 @@ export abstract class Base {
     @PrimaryGeneratedColumn()
 	id: number;
 
-    @JoinColumn({name: 'created_by'})
-	@ManyToOne(() => User)
-	createdBy: User;
+    @Column({
+		nullable: true
+	})
+	createdBy?: number;
 
 	@Column({update: false})
 	@CreateDateColumn({
@@ -24,18 +25,10 @@ export abstract class Base {
 	})
 	createdAt: Date;
 
-    @JoinColumn({name: 'updated_by'})
-	@ManyToOne(() => User)
-	updatedBy?: number | null;
-
     @UpdateDateColumn({
 		type: 'timestamp'
 	})
 	updatedAt?: Date | null;
-
-	@JoinColumn({name: 'deleted_by'})
-	@ManyToOne(() => User)
-	deletedBy?: number | null;
 
     @DeleteDateColumn({
 		type: 'timestamp'

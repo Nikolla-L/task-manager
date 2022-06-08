@@ -1,39 +1,80 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Headers, Query, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CreateTaskDto } from './dto/create-task.dto';
+import { FilterTaskDto } from './dto/task-filter.dto';
 import { TaskService } from './task.service';
 
 @ApiTags('Tasks')
 @Controller('task')
 export class TaskController {
+  
   constructor(private readonly taskService: TaskService) {}
 
   @ApiBearerAuth()
   @Post()
-  create(@Body() createTaskDto: any) {
-    return this.taskService.create(createTaskDto);
+  create(
+    @Headers() headers,
+    @Body() createTaskDto: CreateTaskDto
+  ) {
+    return this.taskService.create(headers, createTaskDto);
   }
 
   @ApiBearerAuth()
   @Get()
-  findAll() {
-    return this.taskService.findAll();
+  findAll(@Query() params: FilterTaskDto) {
+    return this.taskService.findAll(params);
   }
 
   @ApiBearerAuth()
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.taskService.findOne(+id);
+  @ApiOperation({ summary: 'getting my created tasks' })
+  @Get('/my-created')
+  findMyCreated(@Headers() headers) {
+    return this.taskService.findMyCreated(headers);
   }
 
   @ApiBearerAuth()
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateTaskDto: any) {
-    return this.taskService.update(+id, updateTaskDto);
+  @ApiOperation({ summary: 'getting tasks assigned to me' })
+  @Get('/assigned-to-me')
+  findAssignedToMe(@Headers() headers) {
+    return this.taskService.findToMe(headers);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'change task status to "To Do"' })
+  @Put('make-todo/:id')
+  makeToDo(
+    @Headers() headers,
+    @Param('id') id: number,
+  ) {
+    return this.taskService.makeToDo(headers, id);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'change task status to "In Progress"' })
+  @Put('make-in-progress/:id')
+  makeInProgress(
+    @Headers() headers,
+    @Param('id') id: number,
+  ) {
+    return this.taskService.makeInProgress(headers, id);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'change task status to "Done"' })
+  @Put('make-done/:id')
+  makeDone(
+    @Headers() headers,
+    @Param('id') id: number,
+  ) {
+    return this.taskService.makeDone(headers, id);
   }
 
   @ApiBearerAuth()
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.taskService.remove(+id);
+  remove(
+    @Headers() headers,
+    @Param('id') id: number,
+  ) {
+    return this.taskService.remove(headers, id);
   }
 }

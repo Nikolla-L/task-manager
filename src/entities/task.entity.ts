@@ -3,27 +3,32 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Base } from './base.entity';
 import { User } from './user.entity';
 
+export enum Status {
+	TODO = 'TODO',
+	PROGRESS = 'PROGRESS',
+	DONE = 'DONE'
+}
 @Entity('tasks')
 export class Task extends Base {
 
-	@ApiProperty()
 	@Column()
 	title: string;
 
-	@ApiProperty()
 	@Column()
 	description: string;
 
-    @ApiProperty()
 	@Column({
 		type: 'timestamp'
 	})
 	dueDate: Date;
 
 	@Column({
-		default: 'progress'
+		type: 'enum',
+		enum: Status,
+		enumName: 'status',
+		default: Status.TODO
 	})
-	status: string;
+	status: Status;
 
     @ManyToMany(() => User)
     @JoinTable()

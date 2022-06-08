@@ -20,7 +20,7 @@ export class AuthService {
     if(userData) {
         const payload = {
           fullName: userData.fullName,
-          sub: userData.id,
+          email: userData.email,
           userId: userData.id
         };
         
