@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common'
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Public } from '../auth/jwt/jwt-auth.guard';
 import { AddUserDto } from './dto/add-user.dto';
+import { CodeDto } from './dto/code.dto';
+import { ConfirmCodeDto } from './dto/confirm-code.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
 
@@ -16,6 +18,20 @@ export class UserController {
   @Post()
   register(@Body() addUserDto: AddUserDto) {
     return this.userService.register(addUserDto);
+  }
+
+  @Public()
+  @ApiOperation({ summary: 'get email confirmation code' })
+  @Post('/get-code')
+  getCode(@Body() confirmCodeDto: ConfirmCodeDto) {
+    return this.userService.getCode(confirmCodeDto);
+  }
+
+  @Public()
+  @ApiOperation({ summary: 'send code to confirm' })
+  @Post('/confirm-code')
+  confirmCode(@Body() codeDto: CodeDto) {
+    return this.userService.confirmCode(codeDto);
   }
 
   @ApiBearerAuth()

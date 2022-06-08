@@ -1,6 +1,6 @@
 import { Column, Entity, Index, JoinTable, ManyToMany } from 'typeorm';
 import { ApiProperty } from "@nestjs/swagger";
-import { Base } from './Base.entity';
+import { Base } from './base.entity';
 import { User } from './user.entity';
 
 @Entity('tasks')
@@ -29,5 +29,4 @@ export class Task extends Base {
     @JoinTable()
     assignee: User[];
 
-	
 }
