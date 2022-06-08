@@ -20,24 +20,27 @@ export class TaskService {
   updateQuery = this.tasksRepository.createQueryBuilder().update(Task);
 
   async create(headers: IncomingHttpHeaders, createTaskDto: CreateTaskDto) {
-    const myId = await this.authService.getUsersCredentials(headers).userId;
-
     const {userIds, ...taskData} = createTaskDto;
     let users = [];
 
-    for( let i = 0; i < userIds.length; i++ ) {
+    for( let i = 0; i < userIds?.length; i++ ) {
       let user = await this.findUser(userIds[i]);
       if(user) {
         await users.push({...user});
       }
     }
 
-    return await this.tasksRepository.save(
-      {
-        ...taskData,
-        assignee: users,
-        createdBy: myId
-      });
+    const myId = await this.authService.getUsersCredentials(headers).userId;
+    if(myId) {
+      return await this.tasksRepository.save(
+        {
+          ...taskData,
+          assignee: users,
+          createdBy: myId
+        });
+    } else {
+      throw new BadRequestException();
+    }
   }
 
   async findAll(params: FilterTaskDto) {
@@ -106,7 +109,6 @@ export class TaskService {
       return await this.updateQuery
                       .set({ status: Status.DONE })
                       .where("id = :id", { id: id })
-                      .andWhere("createdBy = :createdBy", {createdBy: myId})
                       .execute();
     } else {
       throw new BadRequestException();
