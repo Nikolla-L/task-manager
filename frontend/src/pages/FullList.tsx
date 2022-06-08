@@ -116,7 +116,7 @@ const FullList = () => {
               </Select>
             </Form.Item>
             <Form.Item name='status'>
-              <Select placeholder="მომხმარებელი">
+              <Select placeholder="სტატუსი">
                 {
                   statuses?.map(status => <Option key={status.name} value={status.name}>{status.full}</Option>)
                 }
