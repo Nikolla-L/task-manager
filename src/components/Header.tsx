@@ -3,19 +3,16 @@ import {Header} from "antd/es/layout/layout";
 import {Button, Col, Dropdown, Menu, Row} from "antd";
 import {DownOutlined, UserOutlined, LogoutOutlined} from "@ant-design/icons";
 import {UserContext} from "../contexts/UserContext";
-import {API} from "../util/API";
 
 export const MainHeader = ({user, setPageLoading}: any) => {
     const context = useContext(UserContext);
 
-    const logout = async () => {
-        setPageLoading(true)
-        await API.delete('/auth/logout')
-                .then(res => {
-                    setPageLoading(false)
-                    context.resetUser()
-                    window.location.reload()
-                })
+    const logout = () => {
+        setPageLoading(true);
+        setTimeout(() => {
+           context.resetUser();
+           window.location.reload();
+        }, 1500);
     };
 
     const menu = (

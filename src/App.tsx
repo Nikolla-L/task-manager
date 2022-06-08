@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Layout, Spin } from "antd";
+import { LoadingOutlined } from '@ant-design/icons';
 import { MainHeader } from "./components/Header";
-import { Login } from "./pages/Login";
+import { Auth } from "./pages/Auth";
 import { Navigation } from "./components/Navigation";
 import { MainContent } from "./pages/MainContent";
-import "antd/dist/antd.css";
+import 'antd/dist/antd.min.css';
 
 function App() {
   const user = localStorage.getItem('user');
@@ -14,7 +15,7 @@ function App() {
   if (user) {
     return (
       <BrowserRouter>
-        <Spin spinning={pageLoading}>
+        <Spin spinning={pageLoading} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
           <MainHeader user={user} setPageLoading={setPageLoading}/>
           <Layout>
             <Navigation/>
@@ -24,7 +25,7 @@ function App() {
       </BrowserRouter>
     );
   } else {
-    return <Login/>
+    return <Auth/>
   }
 }
 
