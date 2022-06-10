@@ -5,7 +5,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 import PrivateRoute from "../contexts/PrivateRoute";
 import FullList from "../pages/full-list/FullList";
 import MyCreatedList from "../pages/MyCreatedList";
-import AssignedToMeList from "../pages/AssignedToMeList";
+import AssignedToMeList from "../pages/assigned-to-me/AssignedToMeList";
 import TopTasks from "../pages/TopTasks";
 
 export const MainContent = () => (

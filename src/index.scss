@@ -28,8 +28,10 @@ body {
 // login page
 .auth-wrapper {
     height: 100vh;
+    max-height: 100vh;
     width: 100vw;
     background: linear-gradient(to bottom, rgba(10, 72, 129, 0), rgba(7, 145, 145, 0.445));
+    overflow-y: auto;
 }
 .auth-form {
     padding: 15px;
@@ -75,6 +77,8 @@ body {
 .content-wrapper {
     background: linear-gradient(to bottom, rgba(10, 72, 129, 0), rgba(7, 145, 145, 0.445));
     padding: 25px;
+    height: calc(100vh - 65px);
+    overflow-y: auto;
 }
 
 // table
@@ -119,4 +123,57 @@ body {
 }
 .description-span {
     color: rgb(168, 168, 168);
+}
+
+// assigned-to-me page
+.columns-wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+.column-wrap {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(230, 230, 230);
+    border-radius: 4px;
+    overflow: hidden;
+    height: fit-content;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    h4 {
+        padding: 8px;
+        text-align: center;
+    }
+    .column {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 250px;
+        padding: 0 8px;
+        min-height: 190px;
+        background-color: #fff;
+        max-height: 440px;
+        overflow-y: scroll;
+    }
+}
+.task-wrapper {
+    width: 100%;
+    min-height: 50px;
+    border-radius: 6px;
+    padding: 8px;
+    margin: 12px 0;
+    background-color: rgba(0, 255, 255, 0.123);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    transition: opacity .15s ease-in-out;
+    p {
+        margin: 0;
+        font-weight: bold;
+        font-size: 16px;
+    }
+    span {
+        color: rgb(156, 156, 156);
+        font-size: 14px;
+    }
+    &:hover {
+        opacity: .6;
+    }
 }

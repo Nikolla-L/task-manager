@@ -15,7 +15,7 @@ function App() {
   if (user) {
     return (
       <BrowserRouter>
-        <Spin spinning={pageLoading} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
+        <Spin spinning={pageLoading} indicator={<LoadingOutlined style={{ fontSize: 32 }} spin/>}>
           <MainHeader user={user} setPageLoading={setPageLoading}/>
           <Layout className="inside-layout">
             <Navigation/>

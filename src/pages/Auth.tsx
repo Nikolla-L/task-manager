@@ -225,7 +225,7 @@ export const Auth = () => {
                             </Form.Item>
 
                             <span className='login-link' onClick={changeMode}>ავტორიზაცია</span>
-                            <h3>
+                            <h3 style={{marginTop: 15}}>
                                 <b>Task Managment</b>
                                 {' '}
                                 <i>&#169; 2022</i>
@@ -270,7 +270,7 @@ export const Auth = () => {
                             </Form.Item>
                             
                             <span className='login-link' onClick={changeMode}>რეგისტრაცია</span>
-                            <h3>
+                            <h3 style={{marginTop: 15}}>
                                 <b>Task Managment</b>
                                 {' '}
                                 <i>&#169; 2022</i>
