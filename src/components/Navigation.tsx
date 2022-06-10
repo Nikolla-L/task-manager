@@ -1,7 +1,7 @@
 import React from "react";
 import {Menu} from "antd";
 import {Link} from "react-router-dom";
-import {ContactsOutlined, DatabaseOutlined, BlockOutlined, DoubleLeftOutlined} from "@ant-design/icons";
+import {ContactsOutlined, UpCircleOutlined, DatabaseOutlined, BlockOutlined, DoubleLeftOutlined} from "@ant-design/icons";
 import Sider from "antd/es/layout/Sider";
 
 const menuItems = [ {
@@ -16,6 +16,10 @@ const menuItems = [ {
     path: '/assigned-to-me',
     title: 'ჩემზე მომაგრებული',
     icon: <ContactsOutlined />
+}, {
+    path: '/top-date',
+    title: 'ვადასთან ახლოს',
+    icon: <UpCircleOutlined />
 }];
 
 export const Navigation = () => (
