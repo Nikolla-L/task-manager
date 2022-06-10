@@ -15,7 +15,6 @@ const ChangeStatusModal = ({
 
     const sendValues = (values: any) => {
         setLoading(true);
-        setLoading(false);
         const link = statuses?.find((s: any) => s.name == values.status)?.link;
         if(link) {
             API.put(`${link}/${openStatusModal.id}`)

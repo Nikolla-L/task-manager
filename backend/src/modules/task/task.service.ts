@@ -92,7 +92,7 @@ export class TaskService {
 
   async makeToDo(headers: IncomingHttpHeaders, id: number) {
     const myId = await this.authService.getUsersCredentials(headers).userId;
-    if(await this.checkIsMyCreated(myId, id)) {
+    if(await this.checkIsMyCreatedOrAssigned(myId, id)) {
       return await this.updateQuery
                       .set({ status: Status.TODO })
                       .where("id = :id", { id: id })
@@ -104,7 +104,7 @@ export class TaskService {
 
   async makeInProgress(headers: IncomingHttpHeaders, id: number) {
     const myId = await this.authService.getUsersCredentials(headers).userId;
-    if(await this.checkIsMyCreated(myId, id)) {
+    if(await this.checkIsMyCreatedOrAssigned(myId, id)) {
       return await this.updateQuery
                       .set({ status: Status.PROGRESS })
                       .where("id = :id", { id: id })
@@ -116,7 +116,7 @@ export class TaskService {
 
   async makeDone(headers: IncomingHttpHeaders, id: number) {
     const myId = await this.authService.getUsersCredentials(headers).userId;
-    if(await this.checkIsMyCreated(myId, id)) {
+    if(await this.checkIsMyCreatedOrAssigned(myId, id)) {
       return await this.updateQuery
                       .set({ status: Status.DONE })
                       .where("id = :id", { id: id })
@@ -142,10 +142,14 @@ export class TaskService {
     return await this.usersRepository.findOne({where: {id: id}});
   }
 
-  async checkIsMyCreated(myId: number, id: number): Promise<boolean> {
-    const task = await this.tasksRepository.findOne({where: {id: id}});
+  async checkIsMyCreatedOrAssigned(myId: number, id: number): Promise<boolean> {
+    const task = await this.tasksRepository
+                          .createQueryBuilder('t')
+                          .andWhere({id: id})
+                          .leftJoinAndSelect("t.assignee", "user")
+                          .getOne();
     if(task) {
-      return await task.createdBy == myId;
+      return await (task.createdBy == myId || task.assignee?.some(user => user.id == myId));
     } else {
       return await false;
     }

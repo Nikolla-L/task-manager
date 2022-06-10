@@ -2,10 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {Table, Popconfirm, Button, Modal, Skeleton, Card, Tooltip, Form,  Select, DatePicker} from 'antd';
 import {LoadingOutlined, CalendarOutlined, DeleteOutlined, CiCircleFilled, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import Moment from "react-moment";
+import moment from 'moment';
 import { API } from '../../util/API';
 import CreateTaskModal from './CreateTaskModal';
 import ChangeStatusModal from './ChangeStatusModal';
-import moment from 'moment';
 
 const {Column} = Table;
 const {Option} = Select;
@@ -201,7 +201,14 @@ const FullList = () => {
           align="center"
           render={(_, r: any) => <div onClick={e => e.stopPropagation()}>
             <Tooltip title="სტატუსის შეცვლა">
-              <Button  disabled={JSON.parse(localStorage.getItem('user') || '{}').id != r.createdBy} onClick={(e) => {e.stopPropagation(); setOpenStatusModal(r)}}>
+              <Button 
+                disabled={(() => {
+                    let currentId = JSON.parse(localStorage.getItem('user') || '{}').id;
+                    return !(currentId == r.createdBy || r.assignee.some((user: any) => user.id == currentId));
+                  })()
+                }
+                onClick={(e) => {e.stopPropagation(); setOpenStatusModal(r)}}
+              >
                 <EditOutlined />
               </Button>
             </Tooltip> {'  '}
