@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IncomingHttpHeaders } from 'http';
 import { Status, Task } from 'src/entities/task.entity';
 import { User } from 'src/entities/user.entity';
-import { Repository } from 'typeorm';
+import { LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
 import { AuthService } from '../auth/auth.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { FilterTaskDto } from './dto/task-filter.dto';
@@ -46,7 +46,7 @@ export class TaskService {
   async findAll(params: FilterTaskDto) {
     const qb = await this.tasksRepository.createQueryBuilder('t');
     if(params.dueDate) {
-      qb.andWhere({dueDate: params.dueDate});
+      qb.andWhere({dueDate: LessThanOrEqual(params.dueDate)});
     }
     if(params.status) {
       qb.andWhere({status: params.status});
@@ -57,6 +57,17 @@ export class TaskService {
       result = await result.filter(r => r.assignee.some(user => user.id == params.userId));
     }
     return await result;
+  }
+
+  async findTopTodo() {
+    return await this.tasksRepository.createQueryBuilder('t')
+                                      .where({status: Status.TODO})
+                                      .orWhere({status: Status.PROGRESS})
+                                      .andWhere({dueDate: MoreThanOrEqual(new Date())})
+                                      .orderBy("t.dueDate", "ASC")
+                                      .skip(1)
+                                      .limit(10)
+                                      .getMany();
   }
 
   async findMyCreated(headers: IncomingHttpHeaders) {

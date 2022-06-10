@@ -10,4 +10,8 @@ export default {
 		PASSWORD: process.env['DATABASE_PASSWORD'] || 'cd62a01f30a844a34aad70664bfe0db97fc91b8b8900f72737c030371c8cd33e',
 		NAME: process.env['DATABASE_NAME'] || 'd56qodf950mvpn'
 	},
+	MAILER: {
+		USER: 'n_lukava@cu.edu.ge',
+		PASSWORD:'uriaihxgrnnhmueg'
+	}
 }
