@@ -6,22 +6,22 @@ import { API } from '../util/API';
 
 const {Column} = Table;
 
-const MyCreatedList = () => {
+const TopTasks = () => {
   const [dataSource, setDataSource] = useState([]);
   const [loadingTable, setLoadingTable] = useState(false);
 
   useEffect(() => {
     setLoadingTable(true);
-    API.get('/task/my-created')
+    API.get('/task/top')
       .then(res => {
         setDataSource(res.data);
         setLoadingTable(false);
       })
-  }, []);
+  }, [])
 
   return (
     <div className="table-wrapper">
-      <h3 style={{marginBottom: 25}}>ჩემს მიერ შექმნილი თასქები</h3>
+      <h3 style={{marginBottom: 25}}>ტოპ 10 ვადის ამოწურვასთან ახლოს მყოფი თასქი</h3>
       <Table
         size='small'
         dataSource={dataSource || []}
@@ -47,10 +47,6 @@ const MyCreatedList = () => {
             return <Tooltip title="პროგრესში">
               <CiCircleFilled style={{color: 'yellow'}} />
             </Tooltip>
-          } else if(value == 'DONE') {
-            return <Tooltip title="გაკეთებული">
-              <CiCircleFilled style={{color: 'green'}} />
-            </Tooltip>
           }
         }}/>
       </Table>
@@ -58,4 +54,4 @@ const MyCreatedList = () => {
   )
 }
 
-export default MyCreatedList;
+export default TopTasks

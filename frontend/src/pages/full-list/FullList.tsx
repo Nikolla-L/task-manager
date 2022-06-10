@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Table, Popconfirm, Button, Modal, Skeleton, Card, Tooltip, Form,  Select} from 'antd';
-import {LoadingOutlined, DeleteOutlined, CiCircleFilled, EditOutlined, PlusOutlined} from "@ant-design/icons";
+import {Table, Popconfirm, Button, Modal, Skeleton, Card, Tooltip, Form,  Select, DatePicker} from 'antd';
+import {LoadingOutlined, CalendarOutlined, DeleteOutlined, CiCircleFilled, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import Moment from "react-moment";
-import { API } from '../util/API';
+import { API } from '../../util/API';
 import CreateTaskModal from './CreateTaskModal';
 import ChangeStatusModal from './ChangeStatusModal';
+import moment from 'moment';
 
 const {Column} = Table;
 const {Option} = Select;
@@ -16,6 +17,7 @@ const FullList = () => {
   const [modalLoading, setModalLoading] = useState(false);
   const [singleTask, setSingleTask]: any = useState(null);
   const [filterForm]= Form.useForm();
+  const [filterData, setFilterData]: any = useState({});
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openStatusModal, setOpenStatusModal]: any = useState(null);
   const statuses: Array<any> = [{
@@ -33,33 +35,31 @@ const FullList = () => {
   }];
 
   const getData = (values: any) => {
-    API.get('/task', {params: {...filterForm.getFieldsValue(), ...values}})
+    setLoadingTable(true);
+    API.get('/task', {params: {...values}})
       .then(res => {
+        setLoadingTable(false);
         setDataSource(res.data);
       })
   }
 
   useEffect(() => {
-    setLoadingTable(true);
     API.get('/user')
       .then(res => {
         setUsers(res.data);
-        setLoadingTable(false);
       })
   }, []);
 
   useEffect(() => {
     if(!openAddModal && !openStatusModal) {
-      getData({...filterForm.getFieldsValue()})
+      getData(filterData);
     }
   }, [openAddModal, openStatusModal])
 
   const deleteTask = (id: number) => {
-    setLoadingTable(true)
     API.delete(`/task/${id}`)
       .then(res => {
-        setLoadingTable(false);
-        getData({...filterForm.getFieldsValue()})
+        getData(filterData);
       })
   }
 
@@ -101,30 +101,49 @@ const FullList = () => {
       setOpenAddModal={setOpenAddModal}
     />
 
+    <h3 style={{marginLeft: 25}}><b>სრული სია</b> <i>(გაფილტვრა, შექმნა, ინდივიდულაურის ნახვა, სტატუსის შეცვლა, წაშლა)</i></h3>
     <section className="section-wrapper">
       <div className="filters-wrapper">
-        <Form
-          form={filterForm}
-          onValuesChange={v => getData(v)}
-        >
+        <Form form={filterForm}>
           <div className="wrap">
             <Form.Item name='userId'>
-              <Select placeholder="მომხმარებელი">
+              <Select
+                placeholder="მომხმარებელი"
+                onChange={v => {
+                  getData({...filterData, userId: v});;
+                  setFilterData({...filterData, userId: v});
+                }}>
                 {
                   users?.map((user: any) => <Option key={user?.id} value={user?.id}>{user?.fullName}</Option>)
                 }
               </Select>
             </Form.Item>
             <Form.Item name='status'>
-              <Select placeholder="სტატუსი">
+              <Select
+                placeholder="სტატუსი"
+                onChange={v => {
+                  getData({...filterData, status: v});
+                  setFilterData({...filterData, status: v});
+                }}>
                 {
                   statuses?.map(status => <Option key={status.name} value={status.name}>{status.full}</Option>)
                 }
               </Select>
             </Form.Item>
+            <Form.Item name="dueDate">
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder="ვადა"
+                suffixIcon={<CalendarOutlined />}
+                onChange={v => {
+                  getData({...filterData, dueDate: moment(v).format('YYYY-MM-DD')});
+                  setFilterData({...filterData, dueDate: moment(v).format('YYYY-MM-DD')});
+                }}
+              />
+            </Form.Item>
             <Button onClick={() => {
-              filterForm.resetFields();
-              getData({})
+              getData({});
+              setFilterData({});
             }}>
               გასუფთავება
             </Button>

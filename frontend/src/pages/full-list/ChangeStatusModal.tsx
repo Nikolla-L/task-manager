@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Select, Form , Spin } from 'antd';
 import { EditOutlined } from "@ant-design/icons";
-import { API } from '../util/API';
+import { API } from '../../util/API';
 
 const {Option} = Select;
 

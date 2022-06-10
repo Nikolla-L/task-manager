@@ -2,7 +2,8 @@ import React , { useState } from 'react';
 import {Modal, Form, Input, Select, DatePicker, Spin} from 'antd';
 import {AppstoreAddOutlined, LoadingOutlined} from "@ant-design/icons";
 import moment from 'moment';
-import { API } from '../util/API';
+import { API } from '../../util/API';
+import { RangePickerProps } from 'antd/lib/date-picker';
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -30,6 +31,9 @@ const CreateTaskModal = ({
         required: '${label} აუცილებელია'
     }
 
+    const disabledDate: RangePickerProps['disabledDate'] = current => {
+        return current && current < moment().endOf('day');
+    };
 
     return <Modal
         visible={openAddModal}
@@ -71,7 +75,7 @@ const CreateTaskModal = ({
                     }]}
                     labelCol={{span: 24}}
                 >
-                    <TextArea rows={4}/>
+                    <TextArea rows={4} />
                 </Form.Item>
 
                 <Form.Item
@@ -95,7 +99,11 @@ const CreateTaskModal = ({
                     }]}
                     labelCol={{span: 24}}
                 >
-                    <DatePicker style={{width: '100%'}} placeholder={(new Date()).toString()}/>
+                    <DatePicker
+                        style={{width: '100%'}}
+                        placeholder={moment(new Date()).format("yyyy-MM-DD")}
+                        disabledDate={disabledDate}
+                    />
                 </Form.Item>
             </Form>
         </Spin>
