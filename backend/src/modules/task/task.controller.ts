@@ -26,14 +26,21 @@ export class TaskController {
   }
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'getting my created tasks' })
+  @Get('/top')
+  @ApiOperation({ summary: 'get last 10 tasks near of due date' })
+  getTopTodo() {
+    return this.taskService.findTopTodo();
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'get my created tasks' })
   @Get('/my-created')
   findMyCreated(@Headers() headers) {
     return this.taskService.findMyCreated(headers);
   }
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'getting tasks assigned to me' })
+  @ApiOperation({ summary: 'get tasks assigned to me' })
   @Get('/assigned-to-me')
   findAssignedToMe(@Headers() headers) {
     return this.taskService.findToMe(headers);

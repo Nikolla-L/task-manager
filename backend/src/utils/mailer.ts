@@ -1,10 +1,11 @@
 const nodemailer = require("nodemailer");
+import property from "src/configuration/property";
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'n_lukava@cu.edu.ge',
-        pass: 'uriaihxgrnnhmueg'
+        user: property.MAILER.USER,
+        pass: property.MAILER.PASSWORD
     }, 
     tls:{
         rejectUnauthorized:false
