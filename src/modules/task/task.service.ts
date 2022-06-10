@@ -143,9 +143,13 @@ export class TaskService {
   }
 
   async checkIsMyCreatedOrAssigned(myId: number, id: number): Promise<boolean> {
-    const task = await this.tasksRepository.findOne({where: {id: id}});
+    const task = await this.tasksRepository
+                          .createQueryBuilder('t')
+                          .andWhere({id: id})
+                          .leftJoinAndSelect("t.assignee", "user")
+                          .getOne();
     if(task) {
-      return await (task.createdBy == myId || task.assignee.some(user => user.id == myId));
+      return await (task.createdBy == myId || task.assignee?.some(user => user.id == myId));
     } else {
       return await false;
     }
