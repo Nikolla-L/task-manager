@@ -101,6 +101,7 @@ const FullList = () => {
       setOpenAddModal={setOpenAddModal}
     />
 
+    <h3 style={{marginLeft: 25}}><b>სრული სია</b> <i>(გაფილტვრა, შექმნა, ინდივიდულაურის ნახვა, სტატუსის შეცვლა, წაშლა)</i></h3>
     <section className="section-wrapper">
       <div className="filters-wrapper">
         <Form form={filterForm}>
@@ -119,7 +120,7 @@ const FullList = () => {
             </Form.Item>
             <Form.Item name='status'>
               <Select
-                placeholder="მომხმარებელი"
+                placeholder="სტატუსი"
                 onChange={v => {
                   getData({...filterData, status: v});
                   setFilterData({...filterData, status: v});

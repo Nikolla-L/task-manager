@@ -75,7 +75,7 @@ const CreateTaskModal = ({
                     }]}
                     labelCol={{span: 24}}
                 >
-                    <TextArea rows={4} maxLength={6} />
+                    <TextArea rows={4} />
                 </Form.Item>
 
                 <Form.Item

@@ -21,6 +21,7 @@ const TopTasks = () => {
 
   return (
     <div className="table-wrapper">
+      <h3 style={{marginBottom: 25}}>ტოპ 10 ვადის ამოწურვასთან ახლოს მყოფი თასქი</h3>
       <Table
         size='small'
         dataSource={dataSource || []}

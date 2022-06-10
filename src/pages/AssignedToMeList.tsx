@@ -21,6 +21,7 @@ const AssignedToMeList = () => {
 
   return (
     <div className="table-wrapper">
+      <h3 style={{marginBottom: 25}}>ჩემზე მომაგრებული თასქები</h3>
       <Table
         size='small'
         dataSource={dataSource || []}
