@@ -6,6 +6,8 @@ import moment from 'moment';
 import { API } from '../../util/API';
 import CreateTaskModal from './CreateTaskModal';
 import ChangeStatusModal from './ChangeStatusModal';
+import { statuses } from '../../util/constants';
+import { TaskView } from '../../components/TaskView';
 
 const {Column} = Table;
 const {Option} = Select;
@@ -20,19 +22,6 @@ const FullList = () => {
   const [filterData, setFilterData]: any = useState({});
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openStatusModal, setOpenStatusModal]: any = useState(null);
-  const statuses: Array<any> = [{
-    name: 'TODO',
-    full: 'გასაკეთებელი',
-    link: 'task/make-todo'
-  }, {
-    name: 'PROGRESS',
-    full: 'პროცესში',
-    link: 'task/make-in-progress'
-  }, {
-    name: 'DONE',
-    full: 'გაკეთებული',
-    link: 'task/make-done'
-  }];
 
   const getData = (values: any) => {
     setLoadingTable(true);
@@ -64,30 +53,12 @@ const FullList = () => {
   }
 
   return <>
-    <Modal
-      visible={singleTask != null}
-      centered
-      okText='დახურვა'
-      cancelButtonProps={{style:{display: 'none'}}}
-      onOk={() => setSingleTask(null)}
-      onCancel={() => setSingleTask(null)}
-      maskClosable={true}
-      closable={false}
-    >
-      <Skeleton loading={modalLoading}>
-        <Card size="small" title={singleTask?.title}>
-          <p><span className="description-span">აღწერა</span>: {singleTask?.description}</p>
-          <p><span className="description-span">შექმნის დრო</span>: <Moment format="YYYY-MM-DD">{singleTask?.createdAt}</Moment></p>
-          <p><span className="description-span">ვადა</span>: <Moment format="YYYY-MM-DD">{singleTask?.dueDate}</Moment></p>
-          <p><span className="description-span">შემნქმნელი:</span> {users?.find((u: any) => u.id == singleTask?.createdBy)?.fullName}</p>
-          <p><span className="description-span">სტატუსი:</span> {statuses?.find(s => s.name == singleTask?.status)?.full}</p>
-          <p><span className="description-span">შემსრულებლები:</span> {
-            singleTask?.assignee?.length == 0 ? 'ცრიელია' :
-            singleTask?.assignee?.map((u: any) => `${u?.fullName}, `)
-          }</p>
-        </Card>
-      </Skeleton>
-    </Modal>
+    <TaskView
+      users={users}
+      modalLoading={modalLoading}
+      singleTask={singleTask}
+      setSingleTask={setSingleTask}
+    />
 
     <ChangeStatusModal
       statuses={statuses}
@@ -101,7 +72,7 @@ const FullList = () => {
       setOpenAddModal={setOpenAddModal}
     />
 
-    <h3 style={{marginLeft: 25}}><b>სრული სია</b> <i>(გაფილტვრა, შექმნა, ინდივიდულაურის ნახვა, სტატუსის შეცვლა, წაშლა)</i></h3>
+    <h3 style={{marginLeft: 25}}><b>სრული სია</b> <i>(გაფილტვრა, შექმნა, სტატუსის შეცვლა, წაშლა)</i></h3>
     <section className="section-wrapper">
       <div className="filters-wrapper">
         <Form form={filterForm}>

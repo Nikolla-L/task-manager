@@ -2,24 +2,11 @@ import React, {useEffect, useState} from 'react';
 import Column from './Column';
 import { DragDropContext } from 'react-beautiful-dnd'
 import { API } from '../../util/API';
+import { statuses } from '../../util/constants';
 
 const AssignedToMeList = () => {
   const [data, setData]:any = useState({});
   const [loading, setLoading]: any = useState(false);
-  const statuses: Array<any> = [{
-    name: 'TODO',
-    full: 'გასაკეთებელი',
-    link: 'task/make-todo'
-  }, {
-    name: 'PROGRESS',
-    full: 'პროცესში',
-    link: 'task/make-in-progress'
-  }, {
-    name: 'DONE',
-    full: 'გაკეთებული',
-    link: 'task/make-done'
-  }];
-  
 
   useEffect(() => {
     setLoading(true);

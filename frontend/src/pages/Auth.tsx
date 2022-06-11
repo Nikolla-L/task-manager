@@ -135,7 +135,7 @@ export const Auth = () => {
             visible={showModal}
             centered
             title={<span>
-                    კოდის გაგზავნა
+                    იმეილზე მიღებული კოდის გაგზავნა
                 </span>
             } okText='რეგისტრაცია'
             cancelText='გაუქმება'
@@ -147,6 +147,7 @@ export const Auth = () => {
                 setCodeId(null);
             }}
             maskClosable={false}
+            className="custom-modal"
         >
             <Input value={code} onChange={e => setCode(e.target.value)}/>
         </Modal>
@@ -215,7 +216,7 @@ export const Auth = () => {
                                 ]}
                                 labelCol={{span: 24}}
                             >
-                                <Input.Password placeholder="პაროლის გამეორება"/>
+                                <Input.Password/>
                             </Form.Item>
 
                             <Form.Item>
