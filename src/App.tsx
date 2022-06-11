@@ -19,7 +19,7 @@ function App() {
           <MainHeader user={user} setPageLoading={setPageLoading}/>
           <Layout className="inside-layout">
             <Navigation/>
-            <MainContent/>
+            <MainContent setPageLoading={setPageLoading}/>
           </Layout>
         </Spin>
       </BrowserRouter>

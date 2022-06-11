@@ -17,14 +17,14 @@ const CreateTaskModal = ({
     const [loading, setLoading] = useState(false);
 
     const sendValues = (values: any) => {
+        setLoading(true);
         let formatedDate = moment(values.dueDate).format("yyyy-MM-DD");
-        // console.log({...values, dueDate: formatedDate}, '-----------values')
         API.post('/task', {...values, dueDate: formatedDate})
             .then(res => {
                 setOpenAddModal(false);
                 setLoading(false);
+                resetForm();
             })
-        setLoading(true)
     }
 
     const validateMessages = {
@@ -35,6 +35,10 @@ const CreateTaskModal = ({
         return current && current < moment().endOf('day');
     };
 
+    const resetForm = () => {
+        form.resetFields()
+    }
+
     return <Modal
         visible={openAddModal}
         centered
@@ -44,8 +48,12 @@ const CreateTaskModal = ({
         } okText='შენახვა'
         okButtonProps={{htmlType: 'submit', form: 'task-form'}}
         cancelText='გაუქმება'
-        onCancel={() => setOpenAddModal(false)}
+        onCancel={() => {
+            setOpenAddModal(false);
+            resetForm();
+        }}
         maskClosable={false}
+        className="custom-modal"
     >
         <Spin spinning={loading} indicator={<LoadingOutlined style={{fontSize: 34}} spin/>}>
             <Form

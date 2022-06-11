@@ -3,12 +3,16 @@ import { Table, Tooltip } from 'antd';
 import {LoadingOutlined, CiCircleFilled} from "@ant-design/icons";
 import Moment from "react-moment";
 import { API } from '../util/API';
+import { TaskView } from '../components/TaskView';
 
 const {Column} = Table;
 
 const TopTasks = () => {
   const [dataSource, setDataSource] = useState([]);
   const [loadingTable, setLoadingTable] = useState(false);
+  const [modalLoading, setModalLoading] = useState(false);
+  const [singleTask, setSingleTask]: any = useState(null);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     setLoadingTable(true);
@@ -17,9 +21,21 @@ const TopTasks = () => {
         setDataSource(res.data);
         setLoadingTable(false);
       })
+
+    API.get('/user')
+      .then(res => {
+        setUsers(res.data);
+      })
   }, [])
 
-  return (
+  return <>
+    <TaskView
+      modalLoading={modalLoading}
+      singleTask={singleTask}
+      setSingleTask={setSingleTask}
+      users={users}
+    />
+    
     <div className="table-wrapper">
       <h3 style={{marginBottom: 25}}>ტოპ 10 ვადის ამოწურვასთან ახლოს მყოფი გაუკეთებელი თასქი</h3>
       <Table
@@ -30,6 +46,15 @@ const TopTasks = () => {
           indicator: <LoadingOutlined style={{fontSize: 34}} spin/>
         } : false}
         rowKey="id"
+        onRow={rec => ({
+          onClick(e) {
+            setModalLoading(true);
+            setSingleTask(rec);
+            setTimeout(() => {
+              setModalLoading(false);
+            }, 1200);
+          }
+        })}
       >
         <Column title="დასახელება" dataIndex="title"/>
         <Column title="შექმნის დრო" dataIndex="createDate" render={text => {
@@ -51,7 +76,7 @@ const TopTasks = () => {
         }}/>
       </Table>
     </div>
-  )
+  </>
 }
 
 export default TopTasks

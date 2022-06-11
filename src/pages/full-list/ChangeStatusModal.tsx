@@ -36,6 +36,7 @@ const ChangeStatusModal = ({
         cancelText='გაუქმება'
         onCancel={() => setOpenStatusModal(null)}
         maskClosable={true}
+        className="custom-modal"
     >
         <Spin spinning={loading}>
             <Form
